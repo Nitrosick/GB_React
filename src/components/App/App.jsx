@@ -5,7 +5,7 @@ import style from './App.module.css';
 export const App = () => {
   const [toggle, setToggle] = useState(true);
   const [messageList, setMessageList] = useState([]);
-  const [robotMessage, setRobotMessage] = useState("");
+  const [robotMessage, setRobotMessage] = useState('');
 
   const sendMessage = (e, value) => {
     let copy = Object.assign([], messageList);
@@ -15,7 +15,13 @@ export const App = () => {
 
   useEffect(() => {
     if (messageList.length > 0) {
-      setTimeout(() => setRobotMessage(messageList[messageList.length - 1].author + " wrote a new message."), 1000);
+      setTimeout(
+        () =>
+          setRobotMessage(
+            messageList[messageList.length - 1].author + ' wrote a new message.'
+          ),
+        1000
+      );
     }
   }, [messageList]);
 
@@ -44,10 +50,7 @@ export const App = () => {
 
       {toggle && (
         <div className={style.content_block}>
-          <Message
-            messageList={messageList}
-            sendMessage={sendMessage}
-          />
+          <Message messageList={messageList} sendMessage={sendMessage} />
         </div>
       )}
 

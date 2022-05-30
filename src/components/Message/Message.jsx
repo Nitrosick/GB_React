@@ -2,10 +2,10 @@ import { useState } from 'react';
 import style from './Message.module.css';
 
 export const Message = (props) => {
-  const [message, setMessage] = useState({ author: "Author", text: null });
+  const [message, setMessage] = useState({ author: 'Author', text: null });
 
   const changeMessage = (e) => {
-    setMessage({ author: "Author", text: e.target.value });
+    setMessage({ author: 'Author', text: e.target.value });
   };
 
   return (
@@ -29,8 +29,12 @@ export const Message = (props) => {
         />
         <button
           id={style.message_send}
-          onClick={(e) => { props.sendMessage(e, message) }}
-        >Send</button>
+          onClick={(e) => {
+            props.sendMessage(e, message);
+          }}
+        >
+          Send
+        </button>
       </form>
     </>
   );

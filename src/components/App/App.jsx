@@ -1,37 +1,61 @@
-import { useState } from "react";
-import { Message } from "../Message/Message";
+import { useState, useEffect } from 'react';
+import { Message } from '../Message/Message';
 import style from './App.module.css';
 
 export const App = () => {
-    const [toggle, setToggle] = useState(true);
-    const [message, setMessage] = useState('Lorem ipsum dolor sit amet.');
-    const array = [1,2,3,4,5];
+  const [toggle, setToggle] = useState(true);
+  const [messageList, setMessageList] = useState([]);
+  const [robotMessage, setRobotMessage] = useState("");
 
-    const changeMessage = (e) => {
-        setMessage(e.target.value);
-    };
+  const sendMessage = (e, value) => {
+    let copy = Object.assign([], messageList);
+    copy.push(value);
+    setMessageList(copy);
+  };
 
-    return (
-        <>
-            <div className={style.content_block}>
-                <button className={style.switcher} onClick={() => {setToggle(!toggle)}}>
-                    <img className={toggle ? style.switcher_icon : style.switcher_icon + ' ' + style.switcher_icon_off } src="./images/arrow.png" width="25" height="25" alt="icon"></img>
-                </button>
-            </div>
+  useEffect(() => {
+    if (messageList.length > 0) {
+      setTimeout(() => setRobotMessage(messageList[messageList.length - 1].author + " wrote a new message."), 1000);
+    }
+  }, [messageList]);
 
-            {toggle &&
-                <div className={style.content_block}>
-                    <Message message={message} />
-                </div>
+  return (
+    <>
+      <div className={style.content_block}>
+        <button
+          className={style.switcher}
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+        >
+          <img
+            className={
+              toggle
+                ? style.switcher_icon
+                : style.switcher_icon + ' ' + style.switcher_icon_off
             }
+            src="./images/arrow.png"
+            width="25"
+            height="25"
+            alt="icon"
+          ></img>
+        </button>
+      </div>
 
-            <div className={style.content_block}>
-                <input id={style.change_message} type='text' onChange={changeMessage} value={message} />
+      {toggle && (
+        <div className={style.content_block}>
+          <Message
+            messageList={messageList}
+            sendMessage={sendMessage}
+          />
+        </div>
+      )}
 
-                <ul>
-                    {array.map(num => <li key={num}>{num}</li>)}
-                </ul>
-            </div>
-        </>
-    )
+      <div className={style.plug}></div>
+
+      <div className={style.content_block}>
+        <span>{robotMessage}</span>
+      </div>
+    </>
+  );
 };

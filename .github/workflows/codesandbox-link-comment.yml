@@ -9,7 +9,9 @@ on:
 
 jobs:
   codesandbox-comment:
-    permissions: write-all
+    permissions:
+      actions: write
+      pull-requests: write
     name: Add codesandbox link comment
     runs-on: ubuntu-latest
     steps:

@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+
+    #message_input {
+        width: 100%;
+        border-radius: 5px 0 0 5px;
+        padding: 10px;
+        border: 2px solid #d3d3d3;
+        font-size: 18px;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
+    }
+
+    #message_send {
+        border-radius: 0 5px 5px 0;
+        padding: 10px 50px;
+        border: 2px solid #d3d3d3;
+        background-color: #d3d3d3;
+        font-size: 18px;
+    }
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Message } from '../Message/Message';
+import { Form } from '../Form/Form';
 import icon from '../../images/arrow.png';
 import style from './App.module.css';
 
@@ -8,9 +9,7 @@ export const App = () => {
   const [messageList, setMessageList] = useState([]);
 
   const sendMessage = (value) => {
-    let copy = Object.assign([], messageList);
-    copy.push(value);
-    setMessageList(copy);
+    setMessageList([...messageList, value]);
   };
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const App = () => {
         }, 1500);
       }
     }
-  }, [messageList, setMessageList]);
+  }, [messageList]);
 
   return (
     <>
@@ -54,7 +53,8 @@ export const App = () => {
 
       {toggle && (
         <div className={style.content_block}>
-          <Message messageList={messageList} sendMessage={sendMessage} />
+          <Message messageList={messageList} />
+          <Form sendMessage={sendMessage} />
         </div>
       )}
     </>

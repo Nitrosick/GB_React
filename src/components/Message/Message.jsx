@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, createRef } from 'react';
 import style from './Message.module.css';
 
 export const Message = (props) => {
   const [message, setMessage] = useState({ author: 'Author', text: null });
+  const input = createRef();
 
   const changeMessage = (e) => {
     setMessage({ author: 'Author', text: e.target.value });
@@ -24,13 +25,15 @@ export const Message = (props) => {
         <input
           id={style.message_input}
           type="text"
-          placeholder="Input a message"
+          placeholder="Your message..."
           onChange={changeMessage}
+          ref={input}
         />
         <button
           id={style.message_send}
-          onClick={(e) => {
-            props.sendMessage(e, message);
+          onClick={() => {
+            props.sendMessage(message);
+            input.current.value = '';
           }}
         >
           Send

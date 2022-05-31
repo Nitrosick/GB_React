@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Message } from '../Message/Message';
+import icon from '../../images/arrow.png';
 import style from './App.module.css';
 
 export const App = () => {
   const [toggle, setToggle] = useState(true);
   const [messageList, setMessageList] = useState([]);
-  const [robotMessage, setRobotMessage] = useState('');
 
-  const sendMessage = (e, value) => {
+  const sendMessage = (value) => {
     let copy = Object.assign([], messageList);
     copy.push(value);
     setMessageList(copy);
@@ -15,15 +15,19 @@ export const App = () => {
 
   useEffect(() => {
     if (messageList.length > 0) {
-      setTimeout(
-        () =>
-          setRobotMessage(
-            messageList[messageList.length - 1].author + ' wrote a new message.'
-          ),
-        1000
-      );
+      const author = messageList[messageList.length - 1].author;
+
+      if (author !== 'Robot') {
+        const timer = setTimeout(() => {
+          sendMessage({
+            author: 'Robot',
+            text: author + ' wrote a new message.',
+          });
+          clearTimeout(timer);
+        }, 1500);
+      }
     }
-  }, [messageList]);
+  }, [messageList, setMessageList]);
 
   return (
     <>
@@ -40,11 +44,11 @@ export const App = () => {
                 ? style.switcher_icon
                 : style.switcher_icon + ' ' + style.switcher_icon_off
             }
-            src="./images/arrow.png"
+            src={icon}
             width="25"
             height="25"
             alt="icon"
-          ></img>
+          />
         </button>
       </div>
 
@@ -53,12 +57,6 @@ export const App = () => {
           <Message messageList={messageList} sendMessage={sendMessage} />
         </div>
       )}
-
-      <div className={style.plug}></div>
-
-      <div className={style.content_block}>
-        <span>{robotMessage}</span>
-      </div>
     </>
   );
 };

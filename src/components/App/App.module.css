@@ -16,7 +16,7 @@ button {
   cursor: pointer;
 }
 body {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   padding: 50px;
   background: linear-gradient(90deg, #0f343e, #1f0c31);
@@ -38,12 +38,6 @@ body {
 .switcher_icon_off {
   transform: rotate(90deg);
 }
-#change_message {
-  width: 100%;
-  border-radius: 5px;
-  padding: 10px;
-  border: 2px solid #d3d3d3;
-  color: #9d9d9d;
-  font-size: 18px;
-  margin-bottom: 25px;
+.plug {
+  height: 100%;
 }

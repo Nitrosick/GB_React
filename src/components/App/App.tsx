@@ -1,27 +1,37 @@
+import { FC } from 'react';
 import { useState, useEffect } from 'react';
-import { Message } from '../Message/Message';
+import { Messages } from '../Messages/Messages';
+import { Chats } from '../Chats/Chats';
 import { Form } from '../Form/Form';
 import icon from '../../images/arrow.png';
 import style from './App.module.css';
+import { Message, Chat } from '../../common';
 
-export const App = () => {
-  const [toggle, setToggle] = useState(true);
-  const [messageList, setMessageList] = useState([]);
+export const App: FC = () => {
+  const [toggle, setToggle] = useState<boolean>(true);
+  const [messageList, setMessageList] = useState<Message[]>([]);
+  const [chatsList, setChatsList] = useState<Chat[]>([
+    { id: 1, name: 'First chat' },
+    { id: 2, name: 'Second chat' },
+    { id: 3, name: 'Third chat' },
+  ]);
 
-  const sendMessage = (value) => {
+  const sendMessage = (value: Message) => {
     setMessageList([...messageList, value]);
   };
 
   useEffect(() => {
     if (messageList.length > 0) {
-      const author = messageList[messageList.length - 1].author;
+      const author: string = messageList[messageList.length - 1].author;
 
       if (author !== 'Robot') {
         const timer = setTimeout(() => {
           sendMessage({
             author: 'Robot',
             text: author + ' wrote a new message.',
+            side: 'right',
           });
+
           clearTimeout(timer);
         }, 1500);
       }
@@ -30,6 +40,10 @@ export const App = () => {
 
   return (
     <>
+      <div className={`${style.content_block} ${style.chats}`}>
+        <Chats chatsList={chatsList} />
+      </div>
+
       <div className={style.content_block}>
         <button
           className={style.switcher}
@@ -53,7 +67,7 @@ export const App = () => {
 
       {toggle && (
         <div className={style.content_block}>
-          <Message messageList={messageList} />
+          <Messages messageList={messageList} />
           <Form sendMessage={sendMessage} />
         </div>
       )}

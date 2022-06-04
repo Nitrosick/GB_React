@@ -12,14 +12,16 @@ describe('Form', () => {
   });
 
   it('Check text in button', () => {
-    render(<Form />);
+    const send = jest.fn();
+    render(<Form sendMessage={send} />);
 
     expect(screen.getByRole('button')).toBeTruthy();
     expect(screen.getByText(/Send/)).toBeInTheDocument();
   });
 
   it('Button is enabled', () => {
-    render(<Form />);
+    const send = jest.fn();
+    render(<Form sendMessage={send} />);
 
     expect(screen.getByRole('button')).toBeEnabled();
   });
@@ -34,7 +36,7 @@ describe('Form', () => {
 
   it('Test input', async () => {
     const send = jest.fn();
-    const dom = render(<Form sendMessage={send} />);
+    const dom: any = render(<Form sendMessage={send} />);
     await userEvent.type(
       dom.container.querySelector('#message_input'),
       'Test message'

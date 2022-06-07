@@ -6,11 +6,6 @@ import '@testing-library/jest-dom';
 import { Form } from './Form';
 
 describe('Form', () => {
-  beforeEach(() => {
-    // const send = jest.fn();
-    // render(<Form sendMessage={send} />);
-  });
-
   it('Check text in button', () => {
     render(<Form />);
 
@@ -32,15 +27,16 @@ describe('Form', () => {
     expect(send).toHaveBeenCalledTimes(1);
   });
 
-  it('Test input', async () => {
+  it('Input user value', async () => {
     const send = jest.fn();
-    const dom = render(<Form sendMessage={send} />);
+    render(<Form sendMessage={send} />);
+
     await userEvent.type(
-      dom.container.querySelector('#message_input'),
+      screen.getByPlaceholderText('Your message...'),
       'Test message'
     );
 
-    expect(dom.container.querySelector('#message_input').value).toBe(
+    expect(screen.getByPlaceholderText('Your message...').value).toBe(
       'Test message'
     );
   });

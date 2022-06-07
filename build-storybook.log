@@ -1,0 +1,30 @@
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+info @storybook/react v6.5.5
+info 
+info => Cleaning outputDir: C:\\Users\\BUJINS~1.N\\AppData\\Local\\Temp\\chromatic--54928-nhImenhC7Kid
+ERR! Error: No configuration files have been found in your configDir (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\.storybook).
+ERR! Storybook needs either a "main" or "config" file.
+ERR!     at validateConfigurationFiles (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\validate-configuration-files.js:50:11)
+ERR!     at loadCustomPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\load-custom-presets.js:19:62)
+ERR!     at loadAllPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\presets.js:357:131)
+ERR!     at buildStaticStandalone (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-server\dist\cjs\build-static.js:107:48)
+ERR!     at async buildStatic (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-server\dist\cjs\build-static.js:254:5)
+ERR!  Error: No configuration files have been found in your configDir (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\.storybook).
+ERR! Storybook needs either a "main" or "config" file.
+ERR!     at validateConfigurationFiles (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\validate-configuration-files.js:50:11)
+ERR!     at loadCustomPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\load-custom-presets.js:19:62)
+ERR!     at loadAllPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\presets.js:357:131)
+ERR!     at buildStaticStandalone (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-server\dist\cjs\build-static.js:107:48)
+ERR!     at async buildStatic (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-server\dist\cjs\build-static.js:254:5)
+C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\validate-configuration-files.js:50
+    throw new Error((0, _tsDedent.default)`
+          ^
+
+Error: No configuration files have been found in your configDir (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\.storybook).
+Storybook needs either a "main" or "config" file.
+    at validateConfigurationFiles (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\validate-configuration-files.js:50:11)
+    at loadCustomPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\utils\load-custom-presets.js:19:62)
+    at loadAllPresets (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-common\dist\cjs\presets.js:357:131)
+    at buildStatic (C:\Users\bujinskiy.n\Desktop\HTML\GB_React\node_modules\@storybook\core-server\dist\cjs\build-static.js:258:50)
+
+Node.js v18.3.0

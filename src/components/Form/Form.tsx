@@ -18,7 +18,7 @@ export const Form: FC<FormProps> = ({ sendMessage }) => {
   const [currentValue, setcurrentValue] = useState('');
   const input: any = createRef();
 
-  const changeMessage = (e: any) => {
+  const changeMessage = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setMessage({ author: 'Author', text: e.target.value, side: 'left' });
   };
 

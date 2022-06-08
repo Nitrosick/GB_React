@@ -39,7 +39,7 @@ export const App: FC = () => {
   };
 
   const onRemoveChat = (name: string) => {
-    const copy: Messages = Object.assign(messages);
+    const copy: Messages = Object.assign({}, messages);
     delete copy[name];
     setMessages(copy);
   };

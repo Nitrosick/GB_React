@@ -31,7 +31,8 @@ export const Form: FC<FormProps> = memo(({ addMessage }) => {
     changeMessage(e);
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     addMessage(message);
     setMessage({ author: '', text: '', side: '' });
     setValue('');

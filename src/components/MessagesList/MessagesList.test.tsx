@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { MessagesList } from './MessagesList/MessagesList';
+import { MessageList } from './MessagesList';
 
 describe('Message', () => {
   it('Render messages', () => {
     render(
-      <Messages
-        messageList={[
+      <MessageList
+        messages={[
           { author: '1', text: '1', side: 'left' },
           { author: '2', text: '2', side: 'left' },
         ]}
@@ -20,8 +20,8 @@ describe('Message', () => {
 
   it('Check messages content', () => {
     render(
-      <Messages
-        messageList={[
+      <MessageList
+        messages={[
           { author: 'Author', text: 'First message', side: 'left' },
           { author: 'Author', text: 'Second message', side: 'left' },
         ]}
@@ -33,7 +33,7 @@ describe('Message', () => {
   });
 
   it('Empty message list', () => {
-    render(<Messages messageList={[]} />);
+    render(<MessageList messages={[]} />);
 
     expect(screen.queryByRole('li')).toBeNull();
   });

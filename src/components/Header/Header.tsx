@@ -28,7 +28,7 @@ export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
           ))}
         </nav>
 
-        <button
+        {/* <button
           className={style.switcher}
           onClick={() => {
             setToggle(!toggle);
@@ -45,7 +45,7 @@ export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
             height="25"
             alt="icon"
           />
-        </button>
+        </button> */}
       </header>
       <main>
         <Outlet />

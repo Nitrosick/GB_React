@@ -1,9 +1,8 @@
+import { nanoid } from 'nanoid';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MUIList from '@mui/material/List';
 import MUIListItem from '@mui/material/ListItem';
-import MUIListItemButton from '@mui/material/ListItemButton';
-import MUIListItemText from '@mui/material/ListItemText';
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
 import { Chat } from 'src/common-types';
@@ -13,32 +12,31 @@ import style from './ChatList.module.css';
 interface ChatListProps {
   chats: Chat[];
   onAddChat: (chat: Chat) => void;
+  onRemoveChat: (id: string) => void;
 }
 
-export const ChatList: FC<ChatListProps> = ({ chats, onAddChat }) => {
+export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, onRemoveChat }) => {
   const [value, setValue] = useState('');
-  const [chat, setChat] = useState<Chat>({
-    id: '0',
-    name: '',
-  });
 
-  const changeChatInfo = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setChat({ id: '0', name: e.target.value });
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    changeChatInfo(e);
   };
 
-  const handleClick = () => {
-    onAddChat(chat);
-    setChat({ id: '0', name: '' });
-    setValue('');
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    if (value) {
+      onAddChat({
+        id: nanoid(),
+        name: value,
+      });
+
+      setValue('');
+    }
+  };
+
+  const handleRemove = (name: string) => {
+    onRemoveChat(name);
   };
 
   return (
@@ -46,12 +44,9 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat }) => {
       <div className={style.chatlist}>
         <MUIList disablePadding>
           {chats.map((chat: Chat) => (
-            <MUIListItem key={chat.id} disablePadding>
-              <MUIListItemButton>
-                <MUIListItemText>
-                  <Link className={style.chatlist_item} to={`/chats/${chat.name}`}>{chat.name}</Link>
-                </MUIListItemText>
-              </MUIListItemButton>
+            <MUIListItem className={style.chatlist_item} key={chat.id} disablePadding>
+              <Link className={style.chatlist_item_link} to={`/chats/${chat.name}`}>{chat.name}</Link>
+              <button className={style.chatlist_item_remove} onClick={() => handleRemove(chat.name)}>X</button>
             </MUIListItem>
           ))}
         </MUIList>
@@ -70,7 +65,7 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat }) => {
             id={style.chat_add}
             type="submit"
             variant="outlined"
-            onClick={handleClick}
+            onClick={handleSubmit}
           >
             Add
           </MUIButton>

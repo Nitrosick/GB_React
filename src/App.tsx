@@ -12,13 +12,15 @@ import { Profile } from 'src/pages/Profile';
 
 import style from './App.module.css';
 
-const defaultMessages: Messages = {
+const defaultChats: Messages = {
   first: [],
+  second: [],
+  third: [],
 };
 
 export const App: FC = () => {
-  const [toggle, setToggle] = useState<boolean>(true);
-    const [messages, setMessages] = useState(defaultMessages);
+    const [toggle, setToggle] = useState<boolean>(true);
+    const [messages, setMessages] = useState(defaultChats);
 
     const chats = useMemo(
       () =>
@@ -34,6 +36,12 @@ export const App: FC = () => {
         ...messages,
         [chat.name]: [],
       });
+    };
+
+    const onRemoveChat = (name: string) => {
+      const copy: Messages = Object.assign(messages);
+      delete(copy[name]);
+      setMessages(copy);
     };
 
     const onAddMessage = (chatId: string, newMessage: Message) => {
@@ -54,15 +62,16 @@ export const App: FC = () => {
           <Route path="chats">
             <Route
               index
-              element={<ChatList chats={chats} onAddChat={onAddChat} />}
+              element={<ChatList chats={chats} onAddChat={onAddChat} onRemoveChat={onRemoveChat} />}
             />
             <Route
               path=":chatId"
               element={
                 <ChatPage
                   chats={chats}
-                  onAddChat={onAddChat}
                   messages={messages}
+                  onAddChat={onAddChat}
+                  onRemoveChat={onRemoveChat}
                   onAddMessage={onAddMessage}
                 />
               }

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { Messages } from './Messages';
+import { MessagesList } from './MessagesList/MessagesList';
 
 describe('Message', () => {
   it('Render messages', () => {

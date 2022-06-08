@@ -1,21 +1,21 @@
 import React, { FC } from 'react';
-import { useState, createRef } from 'react';
+import { memo, useState, createRef } from 'react';
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
+import { Message } from 'src/common-types';
 import style from './Form.module.css';
-import { Message } from '../../common';
 
 interface FormProps {
-  sendMessage: (msg: Message) => void;
+  addMessage: (msg: Message) => void;
 }
 
-export const Form: FC<FormProps> = ({ sendMessage }) => {
+export const Form: FC<FormProps> = memo(({ addMessage }) => {
+  const [value, setValue] = useState('');
   const [message, setMessage] = useState<Message>({
     author: '',
     text: '',
     side: '',
   });
-  const [currentValue, setcurrentValue] = useState('');
   const input: any = createRef();
 
   const changeMessage = (
@@ -24,19 +24,30 @@ export const Form: FC<FormProps> = ({ sendMessage }) => {
     setMessage({ author: 'Author', text: e.target.value, side: 'left' });
   };
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue(e.target.value);
+    changeMessage(e);
+  };
+
+  const handleClick = () => {
+    addMessage(message);
+    setMessage({ author: '', text: '', side: '' });
+    setValue('');
+    input.current.focus();
+  };
+
   return (
     <>
       <form className={style.form} action="#">
         <MUIInput
           id={style.message_input}
           type="text"
-          value={currentValue}
+          value={value}
           ref={input}
           placeholder="Your message..."
-          onChange={(e) => {
-            changeMessage(e);
-            setcurrentValue(e.target.value);
-          }}
+          onChange={handleChange}
           fullWidth
           autoFocus
         />
@@ -45,15 +56,11 @@ export const Form: FC<FormProps> = ({ sendMessage }) => {
           id={style.message_send}
           type="submit"
           variant="contained"
-          onClick={() => {
-            sendMessage(message);
-            setcurrentValue('');
-            input.current.focus();
-          }}
+          onClick={handleClick}
         >
           Send
         </MUIButton>
       </form>
     </>
   );
-};
+});

@@ -14,6 +14,7 @@ module.exports = {
       logging: 'info',
     },
     compress: true,
+    // for historyAPI
     historyApiFallback: true,
     port: 8000,
   },

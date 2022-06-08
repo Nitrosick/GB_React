@@ -1,0 +1,29 @@
+.chatlist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+
+    &_item {
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+
+    .form {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+
+        #chat_input {
+            padding: 10px;
+        }
+
+        #chat_add {
+            border-radius: 0 5px 5px 0;
+            padding: 10px 25px;
+        }
+    }
+}

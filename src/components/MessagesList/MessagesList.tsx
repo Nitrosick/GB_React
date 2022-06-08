@@ -1,15 +1,15 @@
 import { FC } from 'react';
-import style from './Messages.module.css';
-import { Message } from '../../common';
+import { Message } from 'src/common-types';
+import style from './MessagesList.module.css';
 
-interface MessageProps {
-  messageList: Message[];
+interface MessageListProps {
+  messages: Message[];
 }
 
-export const Messages: FC<MessageProps> = ({ messageList }) => (
+export const MessageList: FC<MessageListProps> = ({ messages }) => (
   <>
     <ul>
-      {messageList.map((message: Message, idx) => (
+      {messages.map((message: Message, idx) => (
         <li
           className={`${style.message} ${
             message.side === 'left' ? style.message_left : style.message_right

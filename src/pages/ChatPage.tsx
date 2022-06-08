@@ -26,15 +26,16 @@ export const ChatPage: FC<ChatPageProps> = ({
 
   useEffect(() => {
     if (
-        chatId &&
-        messages[chatId]?.length > 0 &&
-        messages[chatId][messages[chatId].length - 1].author !== 'Robot'
+      chatId &&
+      messages[chatId]?.length > 0 &&
+      messages[chatId][messages[chatId].length - 1].author !== 'Robot'
     ) {
-      const author: string = messages[chatId][messages[chatId].length - 1].author;
+      const author: string =
+        messages[chatId][messages[chatId].length - 1].author;
 
       if (author !== 'Robot') {
         const timer = setTimeout(() => {
-            onAddMessage(chatId, {
+          onAddMessage(chatId, {
             author: 'Robot',
             text: author + ' wrote a new message.',
             side: 'right',
@@ -61,7 +62,11 @@ export const ChatPage: FC<ChatPageProps> = ({
 
   return (
     <>
-      <ChatList chats={chats} onAddChat={onAddChat} onRemoveChat={onRemoveChat} />
+      <ChatList
+        chats={chats}
+        onAddChat={onAddChat}
+        onRemoveChat={onRemoveChat}
+      />
       <div className={style.chat}>
         <MessageList messages={chatId ? messages[chatId] : []} />
         <Form addMessage={handleAddMessage} />

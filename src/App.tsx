@@ -19,50 +19,59 @@ const defaultChats: Messages = {
 };
 
 export const App: FC = () => {
-    const [toggle, setToggle] = useState<boolean>(true);
-    const [messages, setMessages] = useState(defaultChats);
+  const [toggle, setToggle] = useState<boolean>(true);
+  const [messages, setMessages] = useState(defaultChats);
 
-    const chats = useMemo(
-      () =>
-        Object.keys(messages).map((chat) => ({
-          id: nanoid(),
-          name: chat,
-        })),
-      [Object.keys(messages).length]
-    );
+  const chats = useMemo(
+    () =>
+      Object.keys(messages).map((chat) => ({
+        id: nanoid(),
+        name: chat,
+      })),
+    [Object.keys(messages).length]
+  );
 
-    const onAddChat = (chat: Chat) => {
+  const onAddChat = (chat: Chat) => {
+    setMessages({
+      ...messages,
+      [chat.name]: [],
+    });
+  };
+
+  const onRemoveChat = (name: string) => {
+    const copy: Messages = Object.assign(messages);
+    delete copy[name];
+    setMessages(copy);
+  };
+
+  const onAddMessage = (chatId: string, newMessage: Message) => {
+    if (newMessage.text) {
       setMessages({
         ...messages,
-        [chat.name]: [],
+        [chatId]: [...messages[chatId], newMessage],
       });
-    };
-
-    const onRemoveChat = (name: string) => {
-      const copy: Messages = Object.assign(messages);
-      delete(copy[name]);
-      setMessages(copy);
-    };
-
-    const onAddMessage = (chatId: string, newMessage: Message) => {
-      if (newMessage.text) {
-        setMessages({
-          ...messages,
-          [chatId]: [...messages[chatId], newMessage],
-        });
-      }
-    };
+    }
+  };
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Header toggle={toggle} setToggle={setToggle} />}>
+        <Route
+          path="/"
+          element={<Header toggle={toggle} setToggle={setToggle} />}
+        >
           <Route index element={<Main />} />
           <Route path="profile" element={<Profile />} />
           <Route path="chats">
             <Route
               index
-              element={<ChatList chats={chats} onAddChat={onAddChat} onRemoveChat={onRemoveChat} />}
+              element={
+                <ChatList
+                  chats={chats}
+                  onAddChat={onAddChat}
+                  onRemoveChat={onRemoveChat}
+                />
+              }
             />
             <Route
               path=":chatId"

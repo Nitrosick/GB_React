@@ -15,7 +15,11 @@ interface ChatListProps {
   onRemoveChat: (id: string) => void;
 }
 
-export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, onRemoveChat }) => {
+export const ChatList: FC<ChatListProps> = ({
+  chats,
+  onAddChat,
+  onRemoveChat,
+}) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +48,23 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, onRemoveChat }) 
       <div className={style.chatlist}>
         <MUIList disablePadding>
           {chats.map((chat: Chat) => (
-            <MUIListItem className={style.chatlist_item} key={chat.id} disablePadding>
-              <Link className={style.chatlist_item_link} to={`/chats/${chat.name}`}>{chat.name}</Link>
-              <button className={style.chatlist_item_remove} onClick={() => handleRemove(chat.name)}>X</button>
+            <MUIListItem
+              className={style.chatlist_item}
+              key={chat.id}
+              disablePadding
+            >
+              <Link
+                className={style.chatlist_item_link}
+                to={`/chats/${chat.name}`}
+              >
+                {chat.name}
+              </Link>
+              <button
+                className={style.chatlist_item_remove}
+                onClick={() => handleRemove(chat.name)}
+              >
+                X
+              </button>
             </MUIListItem>
           ))}
         </MUIList>

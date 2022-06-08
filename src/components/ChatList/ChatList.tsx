@@ -1,22 +1,25 @@
 import { nanoid } from 'nanoid';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Chat } from 'src/common-types';
+
 import MUIList from '@mui/material/List';
 import MUIListItem from '@mui/material/ListItem';
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
-import { Chat } from 'src/common-types';
 
 import style from './ChatList.module.css';
 
 interface ChatListProps {
   chats: Chat[];
+  toggle: boolean;
   onAddChat: (chat: Chat) => void;
   onRemoveChat: (id: string) => void;
 }
 
 export const ChatList: FC<ChatListProps> = ({
   chats,
+  toggle,
   onAddChat,
   onRemoveChat,
 }) => {
@@ -45,7 +48,11 @@ export const ChatList: FC<ChatListProps> = ({
 
   return (
     <>
-      <div className={style.chatlist}>
+      <div
+        className={
+          style.chatlist + ' ' + (!toggle ? style.chatlist_hidden : '')
+        }
+      >
         <MUIList disablePadding>
           {chats.map((chat: Chat) => (
             <MUIListItem

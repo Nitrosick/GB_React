@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import { memo, useState, createRef } from 'react';
+import { Message } from 'src/common-types';
+
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
-import { Message } from 'src/common-types';
+
 import style from './Form.module.css';
 
 interface FormProps {
@@ -16,7 +18,7 @@ export const Form: FC<FormProps> = memo(({ addMessage }) => {
     text: '',
     side: '',
   });
-  const input: any = createRef();
+  const input: React.RefObject<HTMLInputElement> = createRef();
 
   const changeMessage = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -36,7 +38,9 @@ export const Form: FC<FormProps> = memo(({ addMessage }) => {
     addMessage(message);
     setMessage({ author: '', text: '', side: '' });
     setValue('');
-    input.current.focus();
+    if (input.current) {
+      input.current.focus();
+    }
   };
 
   return (

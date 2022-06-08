@@ -1,15 +1,16 @@
-import { FC, useCallback } from 'react';
-import { useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { Form } from 'src/components/Form/Form';
 import { MessageList } from 'src/components/MessagesList/MessagesList';
-import { Message, Messages, Chat } from 'src/common-types';
 import { ChatList } from 'src/components/ChatList/ChatList';
+import { Message, Messages, Chat } from 'src/common-types';
 import { Navigate, useParams } from 'react-router-dom';
+
 import style from 'src/App.module.css';
 
 interface ChatPageProps {
   chats: Chat[];
   messages: Messages;
+  toggle: boolean;
   onAddChat: (chat: Chat) => void;
   onRemoveChat: (id: string) => void;
   onAddMessage: (id: string, msg: Message) => void;
@@ -18,6 +19,7 @@ interface ChatPageProps {
 export const ChatPage: FC<ChatPageProps> = ({
   chats,
   messages,
+  toggle,
   onAddChat,
   onRemoveChat,
   onAddMessage,
@@ -45,7 +47,7 @@ export const ChatPage: FC<ChatPageProps> = ({
         }, 1500);
       }
     }
-  }, [chatId, messages]);
+  }, [chatId, messages, onAddMessage]);
 
   const handleAddMessage = useCallback(
     (message: Message) => {
@@ -53,7 +55,7 @@ export const ChatPage: FC<ChatPageProps> = ({
         onAddMessage(chatId, message);
       }
     },
-    [chatId]
+    [chatId, onAddMessage]
   );
 
   if (chatId && !messages[chatId]) {
@@ -66,6 +68,7 @@ export const ChatPage: FC<ChatPageProps> = ({
         chats={chats}
         onAddChat={onAddChat}
         onRemoveChat={onRemoveChat}
+        toggle={toggle}
       />
       <div className={style.chat}>
         <MessageList messages={chatId ? messages[chatId] : []} />

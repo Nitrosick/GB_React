@@ -1,11 +1,16 @@
 .chatlist {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: white;
   padding: 25px;
+  margin-right: 25px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px black;
+  width: 50%;
+  transition: 0.5s;
+  overflow: hidden;
 }
 .chatlist_item {
   display: flex;
@@ -42,4 +47,9 @@
 .chatlist .form #chat_add {
   border-radius: 0 5px 5px 0;
   padding: 10px 25px;
+}
+.chatlist_hidden {
+  width: 0;
+  margin: 0;
+  padding: 25px 0;
 }

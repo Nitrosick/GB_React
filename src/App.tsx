@@ -28,7 +28,7 @@ export const App: FC = () => {
         id: nanoid(),
         name: chat,
       })),
-    [Object.keys(messages).length]
+    [messages, Object.keys(messages).length]
   );
 
   const onAddChat = (chat: Chat) => {
@@ -70,6 +70,7 @@ export const App: FC = () => {
                   chats={chats}
                   onAddChat={onAddChat}
                   onRemoveChat={onRemoveChat}
+                  toggle={toggle}
                 />
               }
             />
@@ -82,6 +83,7 @@ export const App: FC = () => {
                   onAddChat={onAddChat}
                   onRemoveChat={onRemoveChat}
                   onAddMessage={onAddMessage}
+                  toggle={toggle}
                 />
               }
             />

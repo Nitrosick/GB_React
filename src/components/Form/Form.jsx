@@ -20,6 +20,7 @@ export const Form = (props) => {
           ref={input}
         />
         <button
+          data-id="send"
           id={style.message_send}
           onClick={() => {
             props.sendMessage(message);

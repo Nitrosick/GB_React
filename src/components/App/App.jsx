@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Message } from '../Message/Message';
 import { Form } from '../Form/Form';
-import icon from '../../images/arrow.png';
+// import icon from '../../images/arrow.png';
 import style from './App.module.css';
 
 export const App = () => {
@@ -37,7 +37,7 @@ export const App = () => {
             setToggle(!toggle);
           }}
         >
-          <img
+          {/* <img
             className={
               toggle
                 ? style.switcher_icon
@@ -47,7 +47,7 @@ export const App = () => {
             width="25"
             height="25"
             alt="icon"
-          />
+          /> */}
         </button>
       </div>
 

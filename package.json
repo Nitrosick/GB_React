@@ -9,10 +9,19 @@
     "report": "npm run build --withReport true",
     "lint": "npx eslint --ext .js,.jsx --fix ./",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy:web": "npm run build && gh-pages -d build",
+    "deploy:storybook": "npm run build-storybook && gh-pages -d storybook-static",
+    "deploy:coverage": "npm run test:coverage && gh-pages -d coverage/lcov-report",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "jest": "jest",
+    "test": "jest && npm run loki:test",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --colors",
+    "loki:update": "npm run build-storybook && loki update --requireReference --reactUri file:./storybook-static",
+    "loki:approve": "loki approve",
+    "loki:test": "npm run build-storybook && loki test --requireReference --reactUri file:./storybook-static"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
@@ -26,17 +35,25 @@
     "@storybook/manager-webpack5": "^6.5.5",
     "@storybook/react": "^6.5.5",
     "@storybook/testing-library": "^0.0.11",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.0",
+    "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.4.6",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-storybook": "^0.5.12",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "loki": "^0.30.2",
     "mini-css-extract-plugin": "^2.6.0",
     "prettier": "^2.6.2",
     "sass": "^1.52.1",
@@ -50,7 +67,24 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.18.2",
     "gh-pages": "^4.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "lighthouse": "^9.6.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.app",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.app",
+        "preset": "iPhone 7"
+      }
+    }
   }
 }

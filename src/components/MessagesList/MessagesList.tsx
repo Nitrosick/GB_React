@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Message } from 'src/common-types';
+import { Message } from 'src/store/messages/reducer';
 import style from './MessagesList.module.css';
 
 interface MessageListProps {

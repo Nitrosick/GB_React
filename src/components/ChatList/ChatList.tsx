@@ -1,7 +1,8 @@
-import { nanoid } from 'nanoid';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Chat } from 'src/common-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChat, removeChat } from 'src/store/messages/actions';
+import { selectChats } from 'src/store/messages/selectors';
 
 import MUIList from '@mui/material/List';
 import MUIListItem from '@mui/material/ListItem';
@@ -10,40 +11,26 @@ import MUIButton from '@mui/material/Button';
 
 import style from './ChatList.module.css';
 
-interface ChatListProps {
-  chats: Chat[];
+
+export interface ChatListProps {
   toggle: boolean;
-  onAddChat: (chat: Chat) => void;
-  onRemoveChat: (id: string) => void;
 }
 
-export const ChatList: FC<ChatListProps> = ({
-  chats,
-  toggle,
-  onAddChat,
-  onRemoveChat,
-}) => {
+export const ChatList: FC<ChatListProps> = ({ toggle }) => {
   const [value, setValue] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  const dispatch = useDispatch();
+  const chats = useSelector(
+    selectChats,
+    (prev, next) => prev.length === next.length
+  );
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     if (value) {
-      onAddChat({
-        id: nanoid(),
-        name: value,
-      });
-
+      dispatch(addChat(value));
       setValue('');
     }
-  };
-
-  const handleRemove = (name: string) => {
-    onRemoveChat(name);
   };
 
   return (
@@ -54,10 +41,10 @@ export const ChatList: FC<ChatListProps> = ({
         }
       >
         <MUIList disablePadding>
-          {chats.map((chat: Chat) => (
+          {chats.map((chat, idx) => (
             <MUIListItem
               className={style.chatlist_item}
-              key={chat.id}
+              key={idx}
               disablePadding
             >
               <Link
@@ -68,7 +55,7 @@ export const ChatList: FC<ChatListProps> = ({
               </Link>
               <button
                 className={style.chatlist_item_remove}
-                onClick={() => handleRemove(chat.name)}
+                onClick={() => dispatch(removeChat(chat.name))}
               >
                 X
               </button>
@@ -82,7 +69,7 @@ export const ChatList: FC<ChatListProps> = ({
             type="text"
             value={value}
             placeholder="Chat name..."
-            onChange={handleChange}
+            onChange={(e) => setValue(e.target.value)}
             fullWidth
           />
 

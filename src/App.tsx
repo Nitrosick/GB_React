@@ -1,16 +1,17 @@
 import { Suspense } from 'react';
-import { nanoid } from 'nanoid';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Message, Messages, Chat } from 'src/common-types';
-import { defaultContext } from 'src/utils/ThemeContext';
+import { ThemeContext, defaultContext } from 'src/utils/ThemeContext';
 
-import { ChatList } from 'src/components/ChatList/ChatList';
-import { Header } from 'src/components/Header/Header';
+import { ChatList } from 'components/ChatList/ChatList';
+import { Header } from 'components/Header/Header';
 
 import { ChatPage } from 'src/pages/ChatPage';
-import { Main } from 'src/pages/Main';
+import { Main } from 'src/pages/Main/Main';
 import { Profile } from 'src/pages/Profile/Profile';
+
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 // const Profile = React.lazy(() =>
 //   Promise.all([
@@ -21,56 +22,15 @@ import { Profile } from 'src/pages/Profile/Profile';
 //   ]).then(([moduleExports]) => moduleExports)
 // );
 
-import { ThemeContext } from 'src/utils/ThemeContext';
-import { Provider } from 'react-redux';
-import { store } from './store';
-
 import style from './App.module.css';
-
-const defaultChats: Messages = {
-  first: [],
-  second: [],
-  third: [],
-};
+import { AboutWithConnect } from './pages/About/About';
 
 export const App: FC = () => {
   const [toggle, setToggle] = useState<boolean>(true);
-  const [messages, setMessages] = useState(defaultChats);
   const [theme, setTheme] = useState(defaultContext.theme);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  const chats = useMemo(
-    () =>
-      Object.keys(messages).map((chat) => ({
-        id: nanoid(),
-        name: chat,
-      })),
-    [messages, Object.keys(messages).length]
-  );
-
-  const onAddChat = (chat: Chat) => {
-    setMessages({
-      ...messages,
-      [chat.name]: [],
-    });
-  };
-
-  const onRemoveChat = (name: string) => {
-    const copy: Messages = Object.assign({}, messages);
-    delete copy[name];
-    setMessages(copy);
-  };
-
-  const onAddMessage = (chatId: string, newMessage: Message) => {
-    if (newMessage.text) {
-      setMessages({
-        ...messages,
-        [chatId]: [...messages[chatId], newMessage],
-      });
-    }
   };
 
   return (
@@ -92,28 +52,17 @@ export const App: FC = () => {
                   <Route
                     index
                     element={
-                      <ChatList
-                        chats={chats}
-                        onAddChat={onAddChat}
-                        onRemoveChat={onRemoveChat}
-                        toggle={toggle}
-                      />
+                      <ChatList toggle={toggle} />
                     }
                   />
                   <Route
                     path=":chatId"
                     element={
-                      <ChatPage
-                        chats={chats}
-                        messages={messages}
-                        onAddChat={onAddChat}
-                        onRemoveChat={onRemoveChat}
-                        onAddMessage={onAddMessage}
-                        toggle={toggle}
-                      />
+                      <ChatPage toggle={toggle} />
                     }
                   />
                 </Route>
+                <Route path="about" element={<AboutWithConnect />} />
               </Route>
 
               <Route path="*" element={<h2 className={style.error}>404 page</h2>} />

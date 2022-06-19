@@ -59,6 +59,7 @@ export const Form: FC<FormProps> = memo(({ addMessage }) => {
 
         <MUIButton
           id={style.message_send}
+          data-id='send'
           type="submit"
           variant="contained"
           onClick={handleClick}

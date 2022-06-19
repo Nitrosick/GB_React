@@ -45,10 +45,10 @@ module.exports = {
   // coverageThreshold: undefined,
   coverageThreshold: {
     global: {
-      branches: 50,
+      branches: 60,
       functions: 50,
-      lines: 50,
-      statements: 50,
+      lines: 60,
+      statements: 60,
     },
   },
   // A path to a custom dependency extractor

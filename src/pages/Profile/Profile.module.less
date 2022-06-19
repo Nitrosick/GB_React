@@ -1,0 +1,62 @@
+.profile {
+    width: 100%;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+    transition: 0.5s;
+
+    &_theme {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+
+        &_toggle {
+            background-color: transparent;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    }
+
+    &_name {
+        text-transform: capitalize;
+    }
+
+    &_settings {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 25px;
+
+        #name_input {
+            padding: 10px;
+        }
+
+        #name_change {
+            border-radius: 0 5px 5px 0;
+            padding: 10px 25px;
+        }
+
+        .visibility_toggle {
+            background-color: transparent;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+
+            &:hover {
+                color: #1976d2;
+                transition: 0.3s ease-out;
+            }
+        }
+
+        .visibility_checkbox {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.plug {
+    flex-grow: 1;
+}

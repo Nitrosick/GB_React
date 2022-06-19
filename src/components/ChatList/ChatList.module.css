@@ -1,0 +1,55 @@
+.chatlist {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  padding: 25px;
+  margin-right: 25px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
+  width: 50%;
+  transition: 0.5s;
+  overflow: hidden;
+}
+.chatlist_item {
+  display: flex;
+  justify-content: space-between;
+}
+.chatlist_item_link {
+  width: 100%;
+  line-height: 45px;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+.chatlist_item_link:hover {
+  color: #1976d2;
+  transition: 0.3s ease-out;
+}
+.chatlist_item_remove {
+  background-color: transparent;
+  border: none;
+  transform: scale(1.3, 1);
+  cursor: pointer;
+}
+.chatlist_item_remove:hover {
+  color: #1976d2;
+  transition: 0.3s ease-out;
+}
+.chatlist .form {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.chatlist .form #chat_input {
+  padding: 10px;
+}
+.chatlist .form #chat_add {
+  border-radius: 0 5px 5px 0;
+  padding: 10px 25px;
+}
+.chatlist_hidden {
+  width: 0;
+  margin: 0;
+  padding: 25px 0;
+}

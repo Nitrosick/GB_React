@@ -1,0 +1,41 @@
+.header {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_links {
+        display: flex;
+
+        &_item {
+            text-decoration: none;
+            margin-right: 25px;
+
+            &:hover {
+                color: #1976d2;
+                transition: 0.3s ease-out;
+            }
+        }
+    }
+
+    .switcher {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+
+        &_icon {
+            transform: rotate(180deg);
+            transition: 0.5s;
+        }
+
+        &_icon_off {
+            transform: rotate(0deg);
+        }
+    }
+}

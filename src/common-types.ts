@@ -4,7 +4,11 @@ export interface Message {
   side: string;
 }
 
+export interface Messages {
+  [key: string]: Message[];
+}
+
 export interface Chat {
-  id: number;
+  id: string;
   name: string;
 }

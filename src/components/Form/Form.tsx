@@ -1,24 +1,31 @@
 import React, { FC, memo, useState, createRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addMessage } from 'src/store/messages/actions';
+import { addMessageWithReply } from 'src/store/messages/actions';
 
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
 
 import style from './Form.module.css';
+import { ThunkDispatch } from 'redux-thunk';
 
 export const Form: FC = memo(() => {
   const [value, setValue] = useState('');
   const input: React.RefObject<HTMLInputElement> = createRef();
   const { chatId } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, void, any>>();
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, text: string) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     if (chatId) {
-      dispatch(addMessage(chatId, text));
+      dispatch(
+        addMessageWithReply(chatId, {
+          author: 'User',
+          text: value,
+          side: 'left',
+        })
+      );
     }
 
     setValue('');
@@ -44,10 +51,10 @@ export const Form: FC = memo(() => {
 
         <MUIButton
           id={style.message_send}
-          data-id='send'
+          data-id="send"
           type="submit"
           variant="contained"
-          onClick={(e) => handleClick(e, value)}
+          onClick={handleClick}
         >
           Send
         </MUIButton>

@@ -6,7 +6,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 import { selectMessages } from 'src/store/messages/selectors';
 
-import style from 'src/App.module.css';
+import style from 'components/AppRouter/AppRouter.module.css';
 
 export interface ChatPageProps {
   toggle: boolean;
@@ -15,29 +15,6 @@ export interface ChatPageProps {
 export const ChatPage: FC<ChatPageProps> = ({ toggle }) => {
   const { chatId } = useParams();
   const messages = useSelector(selectMessages, shallowEqual);
-
-  // useEffect(() => {
-  //   if (
-  //     chatId &&
-  //     messages[chatId]?.length > 0 &&
-  //     messages[chatId][messages[chatId].length - 1].author !== 'Robot'
-  //   ) {
-  //     const author: string =
-  //       messages[chatId][messages[chatId].length - 1].author;
-
-  //     if (author !== 'Robot') {
-  //       const timer = setTimeout(() => {
-  //         onAddMessage(chatId, {
-  //           author: 'Robot',
-  //           text: author + ' wrote a new message.',
-  //           side: 'right',
-  //         });
-
-  //         clearTimeout(timer);
-  //       }, 1500);
-  //     }
-  //   }
-  // }, [chatId, messages, onAddMessage]);
 
   // const handleAddMessage = useCallback(
   //   (message: Message) => {

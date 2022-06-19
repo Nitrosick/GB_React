@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react';
 import { ThemeContext } from 'src/utils/ThemeContext';
-import { toggleProfile, changeName } from 'store/profile/actions';
+import { toggleProfile, changeName } from 'store/profile/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectName, selectVisible } from 'src/store/profile/selectors';
 
@@ -23,11 +23,12 @@ export const Profile: FC = () => {
           <span className={style.profile_name}>Profile name: {name}</span>
           <div className={style.plug}></div>
           <span>Color theme:</span>
-          <button className={style.profile_theme_toggle} onClick={toggleTheme}>{theme === 'light' ? '🌞' : '🌙'}</button>
+          <button className={style.profile_theme_toggle} onClick={toggleTheme}>
+            {theme === 'light' ? '🌞' : '🌙'}
+          </button>
         </div>
         <hr />
         <div className={style.profile_settings}>
-
           <MUIInput
             id={style.name_input}
             type="text"
@@ -49,8 +50,18 @@ export const Profile: FC = () => {
           </MUIButton>
 
           <div className={style.plug}></div>
-          <input className={style.visibility_checkbox} type="checkbox" checked={visible} readOnly />
-          <button className={style.visibility_toggle} onClick={() => dispatch(toggleProfile())}>Visibility</button>
+          <input
+            className={style.visibility_checkbox}
+            type="checkbox"
+            checked={visible}
+            readOnly
+          />
+          <button
+            className={style.visibility_toggle}
+            onClick={() => dispatch(toggleProfile())}
+          >
+            Visibility
+          </button>
         </div>
       </div>
     </>

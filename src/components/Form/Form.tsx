@@ -47,6 +47,9 @@ export const Form: FC = memo(() => {
           onChange={(e) => setValue(e.target.value)}
           fullWidth
           autoFocus
+          inputProps={{
+            'data-testid': 'input',
+          }}
         />
 
         <MUIButton

@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { NAVIGATE } from 'src/constants';
 
-import icon from 'src/images/arrow.png';
 import style from './Header.module.css';
 
 interface HeaderProps {
@@ -35,17 +34,15 @@ export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
             setToggle(!toggle);
           }}
         >
-          <img
+          <div
             className={
               toggle
                 ? style.switcher_icon
                 : style.switcher_icon + ' ' + style.switcher_icon_off
             }
-            src={icon}
-            width="25"
-            height="25"
-            alt="icon"
-          />
+          >
+            &#62;
+          </div>
         </button>
       </header>
       <main>

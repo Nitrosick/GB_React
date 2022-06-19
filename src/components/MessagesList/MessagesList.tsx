@@ -15,10 +15,13 @@ export const MessageList: FC<MessageListProps> = ({ messages }) => (
             message.side === 'left' ? style.message_left : style.message_right
           }`}
           key={idx}
+          data-testid="li"
         >
           <span className={style.message_author}>{message.author}</span>
           &nbsp;|&nbsp;
-          <span className={style.message_text}>{message.text}</span>
+          <span className={style.message_text} data-testid="message">
+            {message.text}
+          </span>
         </li>
       ))}
     </ul>

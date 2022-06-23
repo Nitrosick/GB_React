@@ -2,7 +2,7 @@ import { FC, useContext, useState } from 'react';
 import { ThemeContext } from 'src/utils/ThemeContext';
 import { toggleProfile, changeName } from 'store/profile/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProfileState } from 'store/profile/reducer';
+import { selectName, selectVisible } from 'src/store/profile/selectors';
 
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
@@ -12,9 +12,8 @@ import style from './Profile.module.css';
 export const Profile: FC = () => {
   const [value, setValue] = useState('');
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const visible = useSelector((state: ProfileState) => state.visible);
-  const name = useSelector((state: ProfileState) => state.name);
-
+  const visible = useSelector(selectVisible);
+  const name = useSelector(selectName);
   const dispatch = useDispatch();
 
   return (

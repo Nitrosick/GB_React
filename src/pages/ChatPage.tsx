@@ -26,7 +26,7 @@ export const ChatPage: FC<ChatPageProps> = ({ toggle }) => {
   // );
 
   if (chatId && !messages[chatId]) {
-    return <Navigate to="/chats" replace />;
+    return <Navigate to="/chats" />;
   }
 
   return (

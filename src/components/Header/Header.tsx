@@ -1,6 +1,9 @@
 import { FC } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { NAVIGATE } from 'src/constants';
+import { selectAuth } from 'src/store/profile/selectors';
+import { auth } from 'src/store/profile/slice';
 
 import style from './Header.module.css';
 
@@ -10,6 +13,14 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
+  const isAuth = useSelector(selectAuth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    navigate('/signin', { replace: true });
+  };
+
   return (
     <>
       <header className={style.header}>
@@ -28,7 +39,26 @@ export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
           ))}
         </nav>
 
+        <div className={style.plug}></div>
+
+        <div className={style.login}>
+          {isAuth && (
+            <button
+              className={style.login_button}
+              onClick={() => dispatch(auth(false))}
+            >
+              Logout
+            </button>
+          )}
+          {!isAuth && (
+            <button className={style.login_button} onClick={handleLogin}>
+              Login
+            </button>
+          )}
+        </div>
+
         <button
+          title="Hide / Show chat groups"
           className={style.switcher}
           onClick={() => {
             setToggle(!toggle);

@@ -21,6 +21,14 @@
   color: #1976d2;
   transition: 0.3s ease-out;
 }
+.header .login {
+  margin-right: 25px;
+}
+.header .login_button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
 .header .switcher {
   border: none;
   background-color: transparent;
@@ -33,4 +41,7 @@
 }
 .header .switcher_icon_off {
   transform: rotate(0deg) scale(1, 1.5);
+}
+.plug {
+  flex-grow: 1;
 }

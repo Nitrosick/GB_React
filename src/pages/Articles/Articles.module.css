@@ -1,0 +1,16 @@
+.articles {
+  background-color: white;
+  width: 100%;
+  padding: 25px;
+  gap: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
+  display: flex;
+  flex-direction: column;
+}
+.articles_list {
+  list-style-type: none;
+  border-left: 7px solid #1976d2;
+  border-radius: 7px;
+  padding-left: 25px;
+}

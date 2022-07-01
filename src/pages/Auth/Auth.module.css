@@ -1,0 +1,21 @@
+.auth {
+  background-color: white;
+  width: 100%;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.auth_label {
+  margin-right: 10px;
+}
+.auth #auth_login {
+  margin-left: 25px;
+}
+.auth .error_block {
+  width: 100%;
+  margin-top: 25px;
+}

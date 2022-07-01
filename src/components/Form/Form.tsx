@@ -1,13 +1,14 @@
 import React, { FC, memo, useState, createRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addMessageWithReply } from 'src/store/messages/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { push } from 'firebase/database';
+import { getMessageListById } from 'src/services/firebase';
 
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
 
 import style from './Form.module.css';
-import { ThunkDispatch } from 'redux-thunk';
 
 export const Form: FC = memo(() => {
   const [value, setValue] = useState('');
@@ -19,13 +20,11 @@ export const Form: FC = memo(() => {
     e.preventDefault();
 
     if (chatId) {
-      dispatch(
-        addMessageWithReply(chatId, {
-          author: 'User',
-          text: value,
-          side: 'left',
-        })
-      );
+      push(getMessageListById(chatId), {
+        text: value,
+        author: 'User',
+        side: 'left',
+      });
     }
 
     setValue('');

@@ -1,8 +1,6 @@
-import { FC, useContext, useState } from 'react';
-import { ThemeContext } from 'src/utils/ThemeContext';
-import { toggleProfile, changeName } from 'store/profile/slice';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectName, selectVisible } from 'src/store/profile/selectors';
+import { FC, useEffect, useState } from 'react';
+import { profileRef } from 'src/services/firebase';
+import { onValue, update } from 'firebase/database';
 
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
@@ -11,10 +9,43 @@ import style from './Profile.module.css';
 
 export const Profile: FC = () => {
   const [value, setValue] = useState('');
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  const visible = useSelector(selectVisible);
-  const name = useSelector(selectName);
-  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    const unsubscribe = onValue(profileRef, (snapshot) => {
+      const data = snapshot.val();
+
+      setName(data.name);
+      setVisible(data.visible);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const changeName = (name: string) => {
+    update(profileRef, {
+      name: name,
+    });
+    setName(name);
+  };
+
+  const changeVisibility = () => {
+    update(profileRef, {
+      visibility: !visible,
+    });
+    setVisible(!visible);
+  };
+
+  const changeTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+
+    update(profileRef, {
+      theme: newTheme,
+    });
+    setTheme(newTheme);
+  };
 
   return (
     <>
@@ -23,7 +54,7 @@ export const Profile: FC = () => {
           <span className={style.profile_name}>Profile name: {name}</span>
           <div className={style.plug}></div>
           <span>Color theme:</span>
-          <button className={style.profile_theme_toggle} onClick={toggleTheme}>
+          <button className={style.profile_theme_toggle} onClick={changeTheme}>
             {theme === 'light' ? '🌞' : '🌙'}
           </button>
         </div>
@@ -42,7 +73,7 @@ export const Profile: FC = () => {
             type="submit"
             variant="contained"
             onClick={() => {
-              dispatch(changeName(value));
+              changeName(value);
               setValue('');
             }}
           >
@@ -53,12 +84,12 @@ export const Profile: FC = () => {
           <input
             className={style.visibility_checkbox}
             type="checkbox"
-            checked={visible}
+            checked={visible ? visible : false}
             readOnly
           />
           <button
             className={style.visibility_toggle}
-            onClick={() => dispatch(toggleProfile())}
+            onClick={changeVisibility}
           >
             Visibility
           </button>

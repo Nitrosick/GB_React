@@ -1,30 +1,33 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { auth } from 'src/store/profile/slice';
 import { useNavigate } from 'react-router-dom';
 
 import MUIInput from '@mui/material/Input';
 import MUIButton from '@mui/material/Button';
 
 import style from './Auth.module.css';
+import { logIn } from 'src/services/firebase';
 
 export const SignIn: FC = () => {
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(false);
 
-    if (login === 'gb' && password === 'gb') {
-      dispatch(auth(true));
-      navigate('/', { replace: true });
-    } else {
-      setError(true);
+    try {
+      setLoading(true);
+      setError('');
+      await logIn(email, password);
+      navigate('/chats', { replace: true });
+    } catch (error) {
+      setLoading(false);
+      setError((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,9 +39,9 @@ export const SignIn: FC = () => {
         </label>
         <MUIInput
           id="login"
-          type="text"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label className={style.auth_label} htmlFor="password">
@@ -56,9 +59,10 @@ export const SignIn: FC = () => {
         </MUIButton>
       </form>
 
+      {loading && <div className={style.loading}>Loading...</div>}
       {error && (
         <p className={style.error_block} style={{ color: 'red' }}>
-          Incorrect login or password
+          {error}
         </p>
       )}
     </div>

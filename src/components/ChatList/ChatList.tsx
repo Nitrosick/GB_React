@@ -1,8 +1,11 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { addChat, removeChat } from 'src/store/messages/actions';
-import { selectChats } from 'src/store/messages/selectors';
+import { push, remove, set } from 'firebase/database';
+import {
+  getChatById,
+  getMessageListById,
+  messagesRef,
+} from 'src/services/firebase';
 
 import MUIList from '@mui/material/List';
 import MUIListItem from '@mui/material/ListItem';
@@ -11,25 +14,38 @@ import MUIButton from '@mui/material/Button';
 
 import style from './ChatList.module.css';
 
-export interface ChatListProps {
+interface ChatListProps {
   toggle: boolean;
+  chats: any[];
+  messagesDB: any;
 }
 
-export const ChatList: FC<ChatListProps> = ({ toggle }) => {
+export const ChatList: FC<ChatListProps> = ({ toggle, chats, messagesDB }) => {
   const [value, setValue] = useState('');
-  const dispatch = useDispatch();
-  const chats = useSelector(
-    selectChats,
-    (prev, next) => prev.length === next.length
-  );
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (value) {
-      dispatch(addChat(value));
+      set(messagesRef, {
+        ...messagesDB,
+        [value]: {
+          name: value,
+        },
+      });
+
+      push(getMessageListById(value), {
+        author: 'Robot',
+        text: 'Chat has been created',
+        side: 'right',
+      });
+
       setValue('');
     }
+  };
+
+  const handleRemove = (chatId: string) => {
+    remove(getChatById(chatId));
   };
 
   return (
@@ -47,7 +63,7 @@ export const ChatList: FC<ChatListProps> = ({ toggle }) => {
             </Link>
             <button
               className={style.chatlist_item_remove}
-              onClick={() => dispatch(removeChat(chat.name))}
+              onClick={() => handleRemove(chat.id)}
             >
               X
             </button>
@@ -55,7 +71,7 @@ export const ChatList: FC<ChatListProps> = ({ toggle }) => {
         ))}
       </MUIList>
 
-      <form className={style.form} action="#">
+      <form className={style.form} action="#" onSubmit={handleSubmit}>
         <MUIInput
           id={style.chat_input}
           type="text"
@@ -65,12 +81,7 @@ export const ChatList: FC<ChatListProps> = ({ toggle }) => {
           fullWidth
         />
 
-        <MUIButton
-          id={style.chat_add}
-          type="submit"
-          variant="outlined"
-          onClick={handleSubmit}
-        >
+        <MUIButton id={style.chat_add} type="submit" variant="outlined">
           Add
         </MUIButton>
       </form>

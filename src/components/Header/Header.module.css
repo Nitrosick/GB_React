@@ -21,10 +21,8 @@
   color: #1976d2;
   transition: 0.3s ease-out;
 }
-.header .login {
-  margin-right: 25px;
-}
 .header .login_button {
+  margin-right: 25px;
   border: none;
   background-color: transparent;
   cursor: pointer;

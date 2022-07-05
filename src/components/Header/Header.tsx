@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { NAVIGATE } from 'src/constants';
+import { logOut } from 'src/services/firebase';
 import { selectAuth } from 'src/store/profile/selectors';
-import { auth } from 'src/store/profile/slice';
 
 import style from './Header.module.css';
 
@@ -15,10 +15,17 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
   const isAuth = useSelector(selectAuth);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleLogin = () => {
     navigate('/signin', { replace: true });
+  };
+
+  const handleSignup = () => {
+    navigate('/signup', { replace: true });
+  };
+
+  const handleLogout = async () => {
+    await logOut();
   };
 
   return (
@@ -43,17 +50,19 @@ export const Header: FC<HeaderProps> = ({ toggle, setToggle }) => {
 
         <div className={style.login}>
           {isAuth && (
-            <button
-              className={style.login_button}
-              onClick={() => dispatch(auth(false))}
-            >
+            <button className={style.login_button} onClick={handleLogout}>
               Logout
             </button>
           )}
           {!isAuth && (
-            <button className={style.login_button} onClick={handleLogin}>
-              Login
-            </button>
+            <>
+              <button className={style.login_button} onClick={handleLogin}>
+                Login
+              </button>
+              <button className={style.login_button} onClick={handleSignup}>
+                Sign Up
+              </button>
+            </>
           )}
         </div>
 

@@ -2,7 +2,7 @@
   "name": "gb_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nitrosick.github.io/gb_react/",
+  "homepage": "https://nitrosick.github.io/GB_React/",
   "scripts": {
     "start": "webpack serve --mode=development --open",
     "build": "webpack --mode=production",
